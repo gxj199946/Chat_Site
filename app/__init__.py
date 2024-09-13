@@ -14,7 +14,15 @@ limiter = None
 
 def create_app():
     app = Flask(__name__, template_folder='../templates')
+    
     app.config.from_object('app.config')
+    # 可选：允许通过环境变量覆盖 DEBUG 设置
+    if os.environ.get('FLASK_DEBUG'):
+        app.config['DEBUG'] = os.environ.get('FLASK_DEBUG') == 'True'
+    
+        # 确保必要的文件夹存在
+    for folder in ['instance', 'logs', 'static/avatars']:
+        os.makedirs(os.path.join(app.root_path, folder), exist_ok=True)
 
     db.init_app(app)
     login_manager.init_app(app)

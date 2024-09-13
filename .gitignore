@@ -41,3 +41,7 @@ app/static/avatars/
 *.tmp
 *.bak
 *.swp
+
+# 打包文件
+build/
+dist/
