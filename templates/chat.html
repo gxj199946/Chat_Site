@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聊天室</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+
+<body>
+    <h1>欢迎, {{ username }}!</h1>
+    <div id="chat-box" style="height: 400px; overflow-y: scroll; border: 1px solid #ccc;"></div>
+    <input type="text" id="message-input" placeholder="输入消息...">
+    <button onclick="sendMessage()">发送</button>
+    <button onclick="location.href='{{ url_for('main.logout') }}'">登出</button>
+    <h2>在线用户: <span id="user-count">0</span></h2>
+    <ul id="user-list"></ul>
+
+    <script>
+        var socket = io();
+        var chatBox = document.getElementById('chat-box');
+        var messageInput = document.getElementById('message-input');
+        var userCount = document.getElementById('user-count');
+
+        socket.on('connect', function () {
+            console.log('Connected to server');
+        });
+
+        socket.on('user_joined', function (data) {
+    var message = document.createElement('p');
+    if (data.username === '{{ username }}') {
+        message.textContent = '欢迎{{username}}加入聊天室！';
+    } else {
+        message.textContent = data.username + ' 加入了聊天室';
+    }
+    chatBox.appendChild(message);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    userCount.textContent = data.count;
+});
+        socket.on('message', function (data) {
+            var message = document.createElement('p');
+            message.textContent = data.username + ': ' + data.message;
+            chatBox.appendChild(message);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+
+        socket.on('user_left', function (data) {
+            var message = document.createElement('p');
+            message.textContent = data.username + ' 离开了聊天室';
+            chatBox.appendChild(message);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            userCount.textContent = data.count;
+        });
+
+        function sendMessage() {
+            var message = messageInput.value;
+            if (message.trim() !== '') {
+                socket.emit('message', { message: message });
+                messageInput.value = '';
+            }
+        }
+
+        messageInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        socket.on('update_count', function (data) {
+    userCount.textContent = data.count;
+});
+    </script>
+</body>
+
+</html>
