@@ -68,31 +68,32 @@ def register():
         username = request.form['username']
         password = request.form['password']
         avatar = request.files.get('avatar')
-        # ip = request.remote_addr
-        # city = get_city_from_ip(ip)
 
         if User.query.filter_by(username=username).first():
             flash('用户名已存在', 'error')
             return render_template('register.html')
 
-        # new_user = User(username=username, ip=ip, city=city)
         new_user = User(username=username)
         new_user.set_password(password)
-        if avatar:
-            filename = f"{username}.jpg"
-            avatar.save(f"app/static/avatars/{filename}")
+
+        if avatar and avatar.filename:
+            # 确保文件名安全
+            filename = secure_filename(f"{username}_avatar.png")
+            avatar_path = os.path.join(current_app.root_path, 'static', 'avatars', filename)
+            os.makedirs(os.path.dirname(avatar_path), exist_ok=True)
+            
+            # 保存上传的文件
+            avatar.save(avatar_path)
+            new_user.avatar = f"/static/avatars/{filename}"
         else:
-                # 生成默认头像
+            # 生成默认头像
             identicon = generate_identicon(username)
             filename = secure_filename(f"{username}_default_avatar.png")
-        avatar_path = os.path.join(current_app.root_path, 'static', 'avatars', filename)
-        os.makedirs(os.path.dirname(avatar_path), exist_ok=True)
-        
-        if avatar:
-            avatar.save(avatar_path)
-        else:
+            avatar_path = os.path.join(current_app.root_path, 'static', 'avatars', filename)
+            os.makedirs(os.path.dirname(avatar_path), exist_ok=True)
             identicon.save(avatar_path)
-        new_user.avatar = f"/static/avatars/{filename}"
+            new_user.avatar = f"/static/avatars/{filename}"
+
         db.session.add(new_user)
         db.session.commit()
 

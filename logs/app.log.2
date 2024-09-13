@@ -1,96 +1,76 @@
-2024-09-13 15:23:41,759 ERROR: Exception on /register [POST] [in E:\AWork Folder-Course Resources\py\exchange_site\.venv\Lib\site-packages\flask\app.py:838]
-Traceback (most recent call last):
-  File "E:\AWork Folder-Course Resources\py\exchange_site\.venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "E:\AWork Folder-Course Resources\py\exchange_site\.venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "E:\AWork Folder-Course Resources\py\exchange_site\.venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "E:\AWork Folder-Course Resources\py\exchange_site\.venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py", line 49, in register
-    avatar.save(f"app/static/avatars/{filename}")
-  File "E:\AWork Folder-Course Resources\py\exchange_site\.venv\Lib\site-packages\werkzeug\datastructures\file_storage.py", line 125, in save
-    dst = open(dst, "wb")
-          ^^^^^^^^^^^^^^^
-FileNotFoundError: [Errno 2] No such file or directory: 'app/static/avatars/user04.jpg'
-2024-09-13 15:25:09,608 INFO: 应用启动 [in E:\AWork Folder-Course Resources\py\exchange_site\app\__init__.py:34]
-2024-09-13 15:25:24,572 INFO: 用户 user04 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:23]
-2024-09-13 15:26:48,214 INFO: 用户 user04 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:48]
-2024-09-13 15:26:48,215 INFO: 用户 user04 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:51]
-2024-09-13 15:26:48,236 INFO: 用户 user04 退出登录 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:63]
-2024-09-13 15:26:53,652 INFO: 用户 user04 登录成功 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:25]
-2024-09-13 15:26:53,867 INFO: 用户 user04 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:23]
-2024-09-13 15:27:21,748 INFO: 用户 user04 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:48]
-2024-09-13 15:27:21,748 INFO: 用户 user04 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:51]
-2024-09-13 15:27:21,778 INFO: 用户 user04 退出登录 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:63]
-2024-09-13 15:27:25,732 INFO: 用户 user04 登录成功 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:25]
-2024-09-13 15:27:25,942 INFO: 用户 user04 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:23]
-2024-09-13 15:28:26,573 INFO: 应用启动 [in E:\AWork Folder-Course Resources\py\exchange_site\app\__init__.py:34]
-2024-09-13 15:28:26,650 INFO: 用户 user04 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:23]
-2024-09-13 15:28:28,950 INFO: 用户 user04 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:48]
-2024-09-13 15:28:28,951 INFO: 用户 user04 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:51]
-2024-09-13 15:28:28,975 INFO: 用户 user04 退出登录 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:63]
-2024-09-13 15:28:34,752 INFO: 用户 user04 登录成功 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:25]
-2024-09-13 15:28:34,933 INFO: 用户 user04 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:23]
-2024-09-13 15:37:30,774 INFO: 应用启动 [in E:\AWork Folder-Course Resources\py\exchange_site\app\__init__.py:34]
-2024-09-13 15:37:30,893 INFO: 用户 user04 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:23]
-2024-09-13 15:37:35,353 INFO: 用户 user04 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:48]
-2024-09-13 15:37:35,354 INFO: 用户 user04 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:51]
-2024-09-13 15:37:35,377 INFO: 用户 user04 退出登录 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:86]
-2024-09-13 15:37:42,076 ERROR: Exception on /register [POST] [in E:\AWork Folder-Course Resources\py\exchange_site\.venv\Lib\site-packages\flask\app.py:838]
-Traceback (most recent call last):
-  File "E:\AWork Folder-Course Resources\py\exchange_site\.venv\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "E:\AWork Folder-Course Resources\py\exchange_site\.venv\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "E:\AWork Folder-Course Resources\py\exchange_site\.venv\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "E:\AWork Folder-Course Resources\py\exchange_site\.venv\Lib\site-packages\flask\app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py", line 65, in register
-    identicon = generate_identicon(username)
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py", line 40, in generate_identicon
-    identicon = generator.generate(username, size, size, padding=(padding, padding, padding, padding))
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "E:\AWork Folder-Course Resources\py\exchange_site\.venv\Lib\site-packages\pydenticon\__init__.py", line 341, in generate
-    return self._generate_image(matrix, width, height, padding, foreground, background, output_format)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "E:\AWork Folder-Course Resources\py\exchange_site\.venv\Lib\site-packages\pydenticon\__init__.py", line 224, in _generate_image
-    image = Image.new("RGBA", (width + padding[2] + padding[3], height + padding[0] + padding[1]), background)
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "E:\AWork Folder-Course Resources\py\exchange_site\.venv\Lib\site-packages\PIL\Image.py", line 3102, in new
-    return im._new(core.fill(mode, size, color))
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-TypeError: 'float' object cannot be interpreted as an integer
-2024-09-13 15:38:40,004 INFO: 应用启动 [in E:\AWork Folder-Course Resources\py\exchange_site\app\__init__.py:34]
-2024-09-13 15:38:47,389 INFO: 用户 user05 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:23]
-2024-09-13 15:38:51,634 INFO: 用户 user05 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:48]
-2024-09-13 15:38:51,634 INFO: 用户 user05 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:51]
-2024-09-13 15:38:51,647 INFO: 用户 user05 退出登录 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:86]
-2024-09-13 15:39:03,944 INFO: 用户 user06 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:23]
-2024-09-13 15:39:19,942 INFO: 用户 user06 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:48]
-2024-09-13 15:39:19,942 INFO: 用户 user06 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:51]
-2024-09-13 15:39:19,962 INFO: 用户 user06 退出登录 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:86]
-2024-09-13 15:48:27,441 INFO: 应用启动 [in E:\AWork Folder-Course Resources\py\exchange_site\app\__init__.py:34]
-2024-09-13 15:48:34,292 INFO: 用户 user01 登录成功 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:35]
-2024-09-13 15:48:34,451 INFO: 用户 user01 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:23]
-2024-09-13 15:49:20,828 INFO: 用户 user01 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:51]
-2024-09-13 15:49:20,829 INFO: 用户 user01 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:54]
-2024-09-13 15:49:20,854 INFO: 用户 user01 退出登录 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:91]
-2024-09-13 15:49:34,159 INFO: 用户 user07 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:23]
-2024-09-13 15:51:32,295 INFO: 应用启动 [in E:\AWork Folder-Course Resources\py\exchange_site\app\__init__.py:34]
-2024-09-13 15:51:32,402 INFO: 用户 user07 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:23]
-2024-09-13 15:51:37,205 INFO: 用户 user07 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:51]
-2024-09-13 15:51:37,205 INFO: 用户 user07 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:54]
-2024-09-13 15:51:37,230 INFO: 用户 user07 退出登录 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:104]
-2024-09-13 15:51:42,714 INFO: 用户 user07 登录成功 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:48]
+2024-09-13 19:49:03,429 INFO: 用户 admin05 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 19:50:00,681 INFO: 应用启动 [in E:\AWork Folder-Course Resources\py\exchange_site\app\__init__.py:34]
+2024-09-13 19:50:00,917 INFO: 用户 user18 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 19:50:00,967 INFO: 用户 admin05 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 19:50:05,550 INFO: 用户 user18 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 19:50:05,550 INFO: 用户 user18 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 19:50:05,956 INFO: 用户 user18 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 19:50:07,655 INFO: 用户 user18 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 19:50:07,656 INFO: 用户 user18 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 19:50:07,681 INFO: 用户 user18 退出登录 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:108]
+2024-09-13 19:50:08,174 INFO: 用户 user18 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 19:50:14,132 INFO: 登录尝试 - 用户名: user01, IP: 127.0.0.1, 主机: 127.0.0.1:5000, 经度: 106.5746969527004, 纬度: 29.730078597395163, 位置: 重庆市 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:38]
+2024-09-13 19:50:14,274 INFO: 用户 user01 登录成功 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:50]
+2024-09-13 19:50:14,657 INFO: 用户 user01 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 19:50:31,182 INFO: 用户 admin05 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 19:50:31,182 INFO: 用户 admin05 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 19:50:31,184 INFO: 用户 admin05 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 19:50:31,219 INFO: 用户 admin05 退出登录 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:108]
+2024-09-13 19:50:40,762 INFO: 用户 admin06 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 19:50:46,485 INFO: 用户 user18 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 19:50:46,486 INFO: 用户 user18 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 19:51:13,740 INFO: 用户 admin06 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 19:51:13,740 INFO: 用户 admin06 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 19:51:13,741 INFO: 用户 admin06 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 19:51:32,406 INFO: 用户 user01 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 19:51:32,406 INFO: 用户 user01 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 19:51:32,407 INFO: 用户 user01 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 19:51:42,839 INFO: 用户 user20 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 19:57:02,439 INFO: 应用启动 [in E:\AWork Folder-Course Resources\py\exchange_site\app\__init__.py:34]
+2024-09-13 19:57:02,661 INFO: 用户 user20 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 19:57:05,717 INFO: 用户 user20 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 19:57:05,718 INFO: 用户 user20 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 19:57:05,719 INFO: 用户 user20 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 19:57:05,741 INFO: 用户 user20 退出登录 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:108]
+2024-09-13 19:57:16,705 INFO: 用户 user22 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 19:57:40,682 INFO: 用户 admin06 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 19:59:17,691 INFO: 用户 user22 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 19:59:17,692 INFO: 用户 user22 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 19:59:17,693 INFO: 用户 user22 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 19:59:17,892 INFO: 用户 user22 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 20:00:26,839 INFO: 应用启动 [in E:\AWork Folder-Course Resources\py\exchange_site\app\__init__.py:34]
+2024-09-13 20:00:27,150 INFO: 用户 user22 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 20:00:27,170 INFO: 用户 admin06 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 20:00:29,531 INFO: 用户 user22 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 20:00:29,532 INFO: 用户 user22 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 20:00:29,678 INFO: 用户 user22 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 20:00:30,303 INFO: 用户 user22 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 20:00:30,303 INFO: 用户 user22 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 20:00:30,431 INFO: 用户 user22 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 20:00:31,165 INFO: 用户 user22 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 20:00:31,166 INFO: 用户 user22 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 20:00:31,183 INFO: 用户 user22 退出登录 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:108]
+2024-09-13 20:00:34,107 INFO: 用户 user22 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 20:00:46,586 INFO: 用户 user23 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 20:00:50,009 INFO: 用户 user23 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 20:00:50,009 INFO: 用户 user23 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 20:00:50,010 INFO: 用户 user23 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 20:00:50,128 INFO: 用户 user23 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 20:00:50,481 INFO: 用户 user23 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 20:00:50,482 INFO: 用户 user23 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 20:00:50,603 INFO: 用户 user23 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 20:00:50,675 INFO: 用户 user23 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 20:00:50,676 INFO: 用户 user23 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 20:00:50,862 INFO: 用户 user23 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 20:01:01,704 INFO: 用户 user23 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 20:01:01,704 INFO: 用户 user23 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 20:01:27,248 INFO: 用户 user22 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 20:01:27,251 INFO: 用户 user22 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 20:01:35,844 INFO: 用户 user23 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 20:01:35,846 INFO: 用户 user23 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 20:01:51,222 INFO: 应用启动 [in E:\AWork Folder-Course Resources\py\exchange_site\app\__init__.py:34]
+2024-09-13 20:01:51,418 INFO: 用户 admin06 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 20:01:51,422 INFO: 用户 user23 连接到聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:36]
+2024-09-13 20:01:53,716 INFO: 用户 user23 离开聊天室 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:70]
+2024-09-13 20:01:53,716 INFO: 用户 user23 断开连接 [in E:\AWork Folder-Course Resources\py\exchange_site\app\sockets.py:73]
+2024-09-13 20:01:53,734 INFO: 用户 user23 退出登录 [in E:\AWork Folder-Course Resources\py\exchange_site\app\routes.py:108]

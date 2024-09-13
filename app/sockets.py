@@ -52,10 +52,20 @@ def handle_message(data):
         db.session.add(message)
         db.session.commit()
 
+    # emit('message', {
+    #     'username': username,
+    #     'message': data['message'],
+    #     'timestamp': datetime.utcnow().isoformat(),
+    #     'avatar': avatar_url,
+    #     'location': location
+    # }, broadcast=True)
+    #转为北京时间，不需要就注释掉，根据当地时区自动获取
+    from datetime import datetime, timedelta
+    beijing_time = datetime.utcnow() + timedelta(hours=8)
     emit('message', {
         'username': username,
         'message': data['message'],
-        'timestamp': datetime.utcnow().isoformat(),
+        'timestamp': beijing_time.isoformat(),
         'avatar': avatar_url,
         'location': location
     }, broadcast=True)
@@ -72,9 +82,22 @@ def handle_disconnect():
         emit('update_count', {'count': len(online_users)}, broadcast=True)
     current_app.logger.info(f'用户 {username} 断开连接')
 
+#清除所有用户的历史纪录
 @socketio.on('clear_chat')
 def handle_clear_chat():
     Message.query.delete()
     db.session.commit()
     emit('chat_cleared', broadcast=True)
     current_app.logger.info('聊天记录已被清除')
+
+#清除当前用户的历史纪录
+@socketio.on('clear_user_chat')
+def handle_clear_user_chat():
+    username = session.get('username')
+    if username:
+        user = User.query.filter_by(username=username).first()
+        if user:
+            Message.query.filter_by(user_id=user.id).delete()
+            db.session.commit()
+            emit('user_chat_cleared', {'username': username}, room=request.sid)
+

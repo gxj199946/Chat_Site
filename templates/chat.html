@@ -6,33 +6,224 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>聊天室</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            margin: 20px auto;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .header .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .user-info h2 {
+            margin: 0 10px 0 0;
+            font-size: 18px;
+        }
+
+        .header button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .header button:hover {
+            background-color: #45a049;
+        }
+
+        #chat-box {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 10px;
+            flex-direction: column;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .message-left {
+            align-items: flex-start;
+        }
+
+        .message-right {
+            align-items: flex-end;
+        }
+
+        .message-left .message-content {
+            background-color: #f1f0f0;
+        }
+
+        .message-right .message-content {
+            background-color: #dcf8c6;
+        }
+
+        .message img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .message-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .message-right .message-info {
+            flex-direction: row-reverse;
+        }
+
+        .message-right .message-info img {
+            margin-right: 0;
+            margin-left: 10px;
+        }
+
+        .input-area {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .input-area button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .input-area button:hover {
+            background-color: #45a049;
+        }
+
+        .input-area {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .input-area button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .input-area button:hover {
+            background-color: #45a049;
+        }
+
+        #user-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        #user-list li {
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 
 <body>
-    <div style="display: flex;justify-content: space-between;">
-        <h1>欢迎, {{ username }}!</h1>
-        <div style="display: flex;align-items: center;">
-            <h2>在线用户: <span id="user-count">0</span></h2>
-            <button style="width: 3rem;height: 2rem;" onclick="location.href='{{ url_for('main.logout') }}'">登出</button>
+    <div class="chat-container">
+        <div class="header">
+            <h1>欢迎, {{ username }}!</h1>
+            <div class="user-info">
+                <h2>在线用户: <span id="user-count">0</span></h2>
+                <button onclick="location.href='{{ url_for('main.logout') }}'">登出</button>
+            </div>
         </div>
+        <div id="chat-box">
+            {% for message in messages %}
+            <div class="message">
 
-    </div>
-    <div id="chat-box" style="height: 400px; overflow-y: scroll; border: 1px solid #ccc;">
-        {% for message in messages %}
-        <div id="user-info">
-            <img style="width: 4rem;height: 4rem;border-right: 50%;" src="{{ current_user.avatar or url_for('static', filename='default_avatar.jpg') }}" alt="Avatar" >
-            <p>{{ message.user.username }}: {{ message.content }} <small>{{ message.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</small></p>
+                <div>
+                    <img style="width: 4rem;height: 4rem;border-radius: 50%;border:1px solid #595555;"
+                        src="{{ current_user.avatar or url_for('static', filename='default_avatar.jpg') }}" alt="">
+                    {{ message.user.username }}
+
+                </div>
+                <div>
+                    <span>{{ message.content }}</span>
+                    <small>{{ message.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+        <div class="input-area">
+            <input type="text" id="message-input" placeholder="输入消息...">
+            <button onclick="sendMessage()">发送</button>
+            <button onclick="clearChat()">清除记录</button>
+        </div>
     </div>
-
-    <div style="display: flex;">
-        <input style="flex: 1;" type="text" id="message-input" placeholder="输入消息...">
-    <button  style="width: 3rem;height: 2rem;" onclick="sendMessage()">发送</button>
-    <button style="width: 5rem;height: 2rem;" onclick="clearChat()">清除记录</button>
-    
-    </div>
-   
     <ul id="user-list"></ul>
 
     <script>
@@ -46,30 +237,49 @@
         });
 
         socket.on('user_joined', function (data) {
-    var message = document.createElement('p');
-    if (data.username === '{{ username }}') {
-        message.textContent = '欢迎{{username}}加入聊天室！';
-    } else {
-        message.textContent = data.username + ' 加入了聊天室';
-    }
-    chatBox.appendChild(message);
-    chatBox.scrollTop = chatBox.scrollHeight;
-    userCount.textContent = data.count;
-});
-socket.on('message', function (data) {
-    var messageDiv = document.createElement('div');
-    messageDiv.className = 'message';
-    var avatar = document.createElement('img');
-    avatar.src = data.avatar;
-    avatar.alt = 'Avatar';
-    avatar.style = 'width:30px;height:30px;border-radius:50%;margin-right:10px;';
-    var content = document.createElement('span');
-    content.innerHTML = data.username + ' (' + data.location + '): ' + data.message + ' <small>' + new Date(data.timestamp).toLocaleString() + '</small>';
-    messageDiv.appendChild(avatar);
-    messageDiv.appendChild(content);
-    chatBox.appendChild(messageDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
-});
+            var message = document.createElement('p');
+            if (data.username === '{{ username }}') {
+                message.textContent = '欢迎{{username}}加入聊天室！';
+            } else {
+                message.textContent = data.username + ' 加入了聊天室';
+            }
+            chatBox.appendChild(message);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            userCount.textContent = data.count;
+        });
+
+        socket.on('message', function (data) {
+            var messageDiv = document.createElement('div');
+            messageDiv.className = 'message ' + (data.username === '{{ username }}' ? 'message-right' : 'message-left');
+
+            var messageInfo = document.createElement('div');
+            messageInfo.className = 'message-info';
+
+            var avatar = document.createElement('img');
+            avatar.src = data.avatar;
+            avatar.alt = 'Avatar';
+
+            var usernameSpan = document.createElement('span');
+            usernameSpan.textContent = data.username + ' (' + data.location + ')';
+
+            messageInfo.appendChild(avatar);
+            messageInfo.appendChild(usernameSpan);
+
+            var messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+            messageContent.textContent = data.message;
+
+            var timestamp = document.createElement('small');
+            var date = new Date(data.timestamp);
+            timestamp.textContent = date.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' });
+
+            messageDiv.appendChild(messageInfo);
+            messageDiv.appendChild(messageContent);
+            messageDiv.appendChild(timestamp);
+
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
 
         socket.on('user_left', function (data) {
             var message = document.createElement('p');
@@ -80,66 +290,81 @@ socket.on('message', function (data) {
         });
 
         function sendMessage() {
-    var message = document.getElementById('message-input').value;
-    if (message.trim() !== '') {
-        if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                socket.emit('message', {
-                    message: message,
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                });
-            }, function(error) {
-                console.error("Error getting location: ", error);
-                // 如果无法获取位置，仍然发送消息，但不包含位置信息
-                socket.emit('message', { message: message });
-            });
-        } else {
-            // 如果浏览器不支持地理位置，仍然发送消息，但不包含位置信息
-            socket.emit('message', { message: message });
+            var message = document.getElementById('message-input').value;
+            if (message.trim() !== '') {
+                if ("geolocation" in navigator) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        socket.emit('message', {
+                            message: message,
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        });
+                    }, function (error) {
+                        console.error("Error getting location: ", error);
+                        // 如果无法获取位置，仍然发送消息，但不包含位置信息
+                        socket.emit('message', { message: message });
+                    });
+                } else {
+                    // 如果浏览器不支持地理位置，仍然发送消息，但不包含位置信息
+                    socket.emit('message', { message: message });
+                }
+                document.getElementById('message-input').value = '';
+            }
         }
-        document.getElementById('message-input').value = '';
-    }
-}
 
         messageInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 sendMessage();
             }
         });
+
         socket.on('update_count', function (data) {
-    userCount.textContent = data.count;
-});
-
-function clearChat() {
-    if (confirm('确定要清除所有聊天记录吗？')) {
-        socket.emit('clear_chat');
-        chatBox.innerHTML = '';
-    }
-}
-
-socket.on('chat_cleared', function() {
-    chatBox.innerHTML = '';
-});
-
-if ("geolocation" in navigator) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port, {
-            query: {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude
-            }
+            userCount.textContent = data.count;
         });
-        // 其他 socket 事件处理...
-    }, function(error) {
-        console.error("Error getting location: ", error);
-        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-        // 其他 socket 事件处理...
-    });
-} else {
-    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-    // 其他 socket 事件处理...
-}
+        //清除所有用户的历史纪录
+        // function clearChat() {
+        //     if (confirm('确定要清除所有聊天记录吗？')) {
+        //         socket.emit('clear_chat');
+        //         chatBox.innerHTML = '';
+        //     }
+        // }
+        // socket.on('chat_cleared', function () {
+        //     chatBox.innerHTML = '';
+        // });
+        // #清除当前用户的历史纪录
+        function clearChat() {
+            if (confirm('确定要清除您的聊天记录吗？')) {
+                socket.emit('clear_user_chat');
+            }
+        }
+        socket.on('user_chat_cleared', function (data) {
+    if (data.username === '{{ username }}') {
+        var userMessages = chatBox.querySelectorAll('.message-right');
+        userMessages.forEach(function(message) {
+            message.remove();
+        });
+    }
+});
+ 
+
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port, {
+                    query: {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    }
+                });
+                // 其他 socket 事件处理...
+            }, function (error) {
+                console.error("Error getting location: ", error);
+                var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+                // 其他 socket 事件处理...
+            });
+        } else {
+            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+            // 其他 socket 事件处理...
+        }
     </script>
 </body>
 

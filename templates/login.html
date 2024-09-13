@@ -5,32 +5,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            width: 80%;
+            /* 使用百分比宽度，以便响应式调整 */
+            max-width: 350px;
+            /* 设置最大宽度，避免在较大屏幕上过于宽 */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: calc(100%);
+            /* 调整宽度以适应内边距 */
+            padding: 15px;
+            margin: 5px 0 20px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            /* 包含内边距和边框 */
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #5c6ac4;
+        }
+
+        button {
+            width: 100%;
+            background-color: #5c6ac4;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        a {
+            color: #5c6ac4;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* 媒体查询，用于在较小屏幕上调整布局 */
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                /* 在小屏幕上占据更多宽度 */
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1>登录</h1>
-    {% if error %}
-    <p style="color: red;">{{ error }}</p>
-    {% endif %}
-    <form method="POST">
-        <input type="text" name="username" placeholder="用户名" required>
-        <input type="password" name="password" placeholder="密码" required>
-        <input type="hidden" id="latitude" name="latitude">
-        <input type="hidden" id="longitude" name="longitude">
-        <button type="submit">登录</button>
-    </form>
-    <p>还没有账号？<a href="{{ url_for('main.register') }}">注册</a></p>
+    <div class="container">
+        <h1>登录</h1>
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
+        <form method="POST">
+            <input type="text" name="username" placeholder="用户名" required>
+            <input type="password" name="password" placeholder="密码" required>
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
+            <button type="submit">登录</button>
+        </form>
+        <p>还没有账号？<a href="{{ url_for('main.register') }}">注册</a></p>
+    </div>
+    <script>
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+            }, function (error) {
+                console.error("Error getting location: ", error);
+            });
+        }
+    </script>
 </body>
 
 </html>
-
-<script>
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        document.getElementById('latitude').value = position.coords.latitude;
-        document.getElementById('longitude').value = position.coords.longitude;
-      }, function(error) {
-        console.error("Error getting location: ", error);
-      });
-    }
-    </script>
