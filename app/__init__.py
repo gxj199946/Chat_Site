@@ -6,6 +6,7 @@ from flask_limiter.util import get_remote_address
 import logging
 from logging.handlers import RotatingFileHandler
 import os
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -19,7 +20,7 @@ def create_app():
     login_manager.init_app(app)
     limiter = Limiter(key_func=get_remote_address)
     limiter.init_app(app)
-
+    migrate = Migrate(app, db)
     # 配置日志
     if not os.path.exists('logs'):
         os.mkdir('logs')

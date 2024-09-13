@@ -9,12 +9,30 @@
 </head>
 
 <body>
-    <h1>欢迎, {{ username }}!</h1>
-    <div id="chat-box" style="height: 400px; overflow-y: scroll; border: 1px solid #ccc;"></div>
-    <input type="text" id="message-input" placeholder="输入消息...">
-    <button onclick="sendMessage()">发送</button>
-    <button onclick="location.href='{{ url_for('main.logout') }}'">登出</button>
-    <h2>在线用户: <span id="user-count">0</span></h2>
+    <div style="display: flex;justify-content: space-between;">
+        <h1>欢迎, {{ username }}!</h1>
+        <div style="display: flex;align-items: center;">
+            <h2>在线用户: <span id="user-count">0</span></h2>
+            <button style="width: 3rem;height: 2rem;" onclick="location.href='{{ url_for('main.logout') }}'">登出</button>
+        </div>
+
+    </div>
+    <div id="chat-box" style="height: 400px; overflow-y: scroll; border: 1px solid #ccc;">
+        {% for message in messages %}
+        <div id="user-info">
+            <img style="width: 4rem;height: 4rem;border-right: 50%;" src="{{ current_user.avatar or url_for('static', filename='default_avatar.jpg') }}" alt="Avatar" >
+            <p>{{ message.user.username }}: {{ message.content }} <small>{{ message.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</small></p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div style="display: flex;">
+        <input style="flex: 1;" type="text" id="message-input" placeholder="输入消息...">
+    <button  style="width: 3rem;height: 2rem;" onclick="sendMessage()">发送</button>
+    <button style="width: 5rem;height: 2rem;" onclick="clearChat()">清除记录</button>
+    
+    </div>
+   
     <ul id="user-list"></ul>
 
     <script>
@@ -38,12 +56,20 @@
     chatBox.scrollTop = chatBox.scrollHeight;
     userCount.textContent = data.count;
 });
-        socket.on('message', function (data) {
-            var message = document.createElement('p');
-            message.textContent = data.username + ': ' + data.message;
-            chatBox.appendChild(message);
-            chatBox.scrollTop = chatBox.scrollHeight;
-        });
+socket.on('message', function (data) {
+    var messageDiv = document.createElement('div');
+    messageDiv.className = 'message';
+    var avatar = document.createElement('img');
+    avatar.src = data.avatar;
+    avatar.alt = 'Avatar';
+    avatar.style = 'width:30px;height:30px;border-radius:50%;margin-right:10px;';
+    var content = document.createElement('span');
+    content.innerHTML = data.username + ' (' + data.location + '): ' + data.message + ' <small>' + new Date(data.timestamp).toLocaleString() + '</small>';
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(content);
+    chatBox.appendChild(messageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+});
 
         socket.on('user_left', function (data) {
             var message = document.createElement('p');
@@ -54,12 +80,27 @@
         });
 
         function sendMessage() {
-            var message = messageInput.value;
-            if (message.trim() !== '') {
+    var message = document.getElementById('message-input').value;
+    if (message.trim() !== '') {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                socket.emit('message', {
+                    message: message,
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                });
+            }, function(error) {
+                console.error("Error getting location: ", error);
+                // 如果无法获取位置，仍然发送消息，但不包含位置信息
                 socket.emit('message', { message: message });
-                messageInput.value = '';
-            }
+            });
+        } else {
+            // 如果浏览器不支持地理位置，仍然发送消息，但不包含位置信息
+            socket.emit('message', { message: message });
         }
+        document.getElementById('message-input').value = '';
+    }
+}
 
         messageInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
@@ -69,6 +110,36 @@
         socket.on('update_count', function (data) {
     userCount.textContent = data.count;
 });
+
+function clearChat() {
+    if (confirm('确定要清除所有聊天记录吗？')) {
+        socket.emit('clear_chat');
+        chatBox.innerHTML = '';
+    }
+}
+
+socket.on('chat_cleared', function() {
+    chatBox.innerHTML = '';
+});
+
+if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port, {
+            query: {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            }
+        });
+        // 其他 socket 事件处理...
+    }, function(error) {
+        console.error("Error getting location: ", error);
+        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+        // 其他 socket 事件处理...
+    });
+} else {
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+    // 其他 socket 事件处理...
+}
     </script>
 </body>
 
